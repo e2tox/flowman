@@ -15,7 +15,7 @@
  * Created by ling on 12/18/13 9:12 PM
  */
 
-var flow = require('../index')
+var flowman = require('../index')
     , assert = require('assert')
     , should = require('should');
 
@@ -25,7 +25,7 @@ describe('flow', function(){
 
 
         it('should return as function', function(done){
-            var seq = flow.sequential(function(next){
+            var seq = flowman.sequential(function(next){
                     next();
                 });
             seq.should.be.type('function');
@@ -34,7 +34,7 @@ describe('flow', function(){
 
 
         it('should be done', function(done){
-            var seq = flow.sequential(function(next){
+            var seq = flowman.sequential(function(next){
                     next();
                 });
             seq().done(function(){
@@ -44,7 +44,7 @@ describe('flow', function(){
 
 
         it('should return true', function(done){
-            var seq = flow.sequential(function(next){
+            var seq = flowman.sequential(function(next){
                     next(null, true);
                 });
             seq().done(function(result){
@@ -55,7 +55,7 @@ describe('flow', function(){
 
 
         it('should not done', function(done){
-            var seq = flow.sequential(function(next){
+            var seq = flowman.sequential(function(next){
                     next('not good');
                 });
             seq().done(function(){
@@ -67,7 +67,7 @@ describe('flow', function(){
         });
 
         it('should catch error', function(done){
-            var seq = flow.sequential(function(){
+            var seq = flowman.sequential(function(){
                     throw new Error('you see it');
                 });
             seq().catch(function(error) {
@@ -77,7 +77,7 @@ describe('flow', function(){
         });
 
         it('should have an end', function(done){
-            var seq = flow.sequential(function(){
+            var seq = flowman.sequential(function(){
                 throw new Error('you see it');
             });
             seq().catch(function(error) {
@@ -88,7 +88,7 @@ describe('flow', function(){
         });
 
         it('should return combined string', function(done){
-            var seq = flow.sequential(
+            var seq = flowman.sequential(
                 function(input, next){
                     setTimeout(function(){
                         next(null, input.first, input.family);

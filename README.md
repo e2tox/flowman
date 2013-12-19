@@ -1,12 +1,12 @@
 
-## flowman
+## Flowman
 
-A lightweight async flow control to convert your callbacks to promise
+A lightweight (25 SLOC) async flow control to convert your callbacks to promise
 
 ## Installation
 
 ```bash
-$ npm install flowman
+$ npm install flowman;.
 ```
 
 ## Usage
