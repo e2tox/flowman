@@ -13,29 +13,22 @@ $ npm install flowman
 
 ```js
 
-var http = require('http'),
-    vh = require('vh');
+var flow = require('flowman');
 
-http.createServer(
-    vh()
-        .when('domain.com', app1)
-        .when('*.domain.com', app2)
-        .otherwise(appNotFound)
-);
+var combine = flow.sequential(
+    function(input, next){
+        setTimeout(function(){
+            next(null, input.first, input.family);
+        }, 5);
+    },
+    function(first, family, next){
+        setTimeout(function(){
+            next(null, first + ', ' + family);
+        }, 5);
+    });
 
-function app1(req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Application 1');
-}
-
-function app2(req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Application 2');
-}
-
-function appNotFound(req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('No Application Found');
-}
+combine({first:'Ling', family:'Chang'}).done(function(name){
+    name.should.equal('Ling, Chang');
+});
 
 ```
