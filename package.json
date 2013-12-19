@@ -1,0 +1,29 @@
+{
+    "name": "flowman",
+    "description": "A lightweight async flow control to convert your callbacks to promise",
+    "tags": [
+        "flow",
+        "async",
+        "callback",
+        "promise",
+        "defered"
+    ],
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:e2tox/flowman.git"
+    },
+    "dependencies": {
+        "when": "*"
+    },
+    "homepage": "https://github.com/e2tox/flowman",
+    "author": {
+        "name": "e2tox",
+        "email": "e2tox@live.com"
+    },
+    "main": "./index.js",
+    "engines": {
+        "node": "*"
+    },
+    "readmeFilename": "README.md"
+}
