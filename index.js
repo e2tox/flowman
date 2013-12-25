@@ -2,8 +2,13 @@ var when = require('when');
 
 
 var extensions = {
-    start: function(promise, boot) {
+
+
+    sequential: function(promise, boot) {
         var step = 0, state = {}, steps = this.steps;
+        function done(result) {
+            promise.resolve(result);
+        }
         function next(/* error, arguments... */) {
             var fn = steps[step++]
                 , args = Array.prototype.slice.call(arguments)
@@ -17,6 +22,7 @@ var extensions = {
                 return;
             }
             args.push(next);
+            args.push(done);
             try {
                 fn.apply(state, args);
             }
@@ -27,16 +33,17 @@ var extensions = {
         boot.unshift(null);
         next.apply(state, boot);
     }
+
 };
 
 
 exports.sequential = function (/* functions... */) {
     function flow() {
         var p = when.defer();
-        flow.start(p, Array.prototype.slice.call(arguments));
+        flow.sequential(p, Array.prototype.slice.call(arguments));
         return p.promise;
     }
-    flow.start = extensions.start;
+    flow.sequential = extensions.sequential;
     flow.steps = Array.prototype.slice.call(arguments);
     return flow;
 };
